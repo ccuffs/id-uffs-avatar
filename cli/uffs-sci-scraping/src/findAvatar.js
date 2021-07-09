@@ -1,6 +1,6 @@
 const path = require('path');
 
-async function acessaPagina(sga) {
+async function accessPage(sga) {
     const page = await sga.newTab();
     
     await Promise.all([
@@ -13,23 +13,22 @@ async function acessaPagina(sga) {
     return page;
 }
 
-async function coletaAvatarUrl(page) {
+async function collectAvatarUrl(page) {
     const url = await page.evaluate(() => {
-        var url = '';
-        document.querySelectorAll('img#foto').forEach(function(el) {
-            url = el.currentSrc;
-        });
-        return url;
+        return document.querySelector('img#foto').currentSrc;
     });
+
     return url;
 }
 
 async function run(sci) {
-    const page = await acessaPagina(sci);
-    const avatarUrl = await coletaAvatarUrl(page);
+    const page = await accessPage(sci);
+    const avatarUrl = await collectAvatarUrl(page);
+    const cookies = (await page.cookies()).filter(cookie => cookie.name === 'JSESSIONID');
 
     return {
-        avatarUrl: avatarUrl
+        avatarUrl: avatarUrl,
+        cookie: cookies[0].name + '=' + cookies[0].value,
     };
 }
 

@@ -1,5 +1,5 @@
 {
-    "headless": false,
+    "headless": true,
     "devtools": false,
     "args": ["--no-sandbox", "--disable-setuid-sandbox"]
 }

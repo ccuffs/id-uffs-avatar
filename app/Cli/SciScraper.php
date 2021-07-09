@@ -22,14 +22,14 @@ class SciScraper
     {
         $output = [];
         $code = -1;
-        $sga = $this->config['bin'];
+        $sci = $this->config['bin'];
         $configPath = $this->config['config_path'];
-        $cmd = "$sga $args --config=\"$configPath\"";
+        $cmd = "$sci $args --config=\"$configPath\"";
 
         exec($cmd, $output, $code);
 
         if ($code != 0) {
-            throw new \Exception("Error running sgascrapper (code $code): " . implode("\n", $output));
+            throw new \Exception("Error running sciscrapper (code $code): " . implode("\n", $output));
         }
 
         return json_decode(implode('', $output));
@@ -37,12 +37,12 @@ class SciScraper
 
     protected function runRequests($requests)
     {
-        if (count($requests) == 0 || !isset($requests['pedidos'])) {
-            throw  new \Exception('Lista de comandos está vazia. Use sga()->usando()->...->get()');
+        if (count($requests) == 0) {
+            throw  new \Exception('Lista de comandos está vazia. Use sci()->usando()->...->get()');
         }
 
         if (!isset($requests['credenciais'])) {
-            throw new \Exception('Credenciais de acesso não informadas. Use sga()->usando()->...');
+            throw new \Exception('Credenciais de acesso não informadas. Use sci()->usando()->...');
         }
 
         $args = '';
@@ -51,66 +51,24 @@ class SciScraper
             $args .= "--$key=\"$value\" ";
         }
 
-        $args .= implode(' ', $requests['pedidos']);
-
         $result = $this->runCli($args);
-        return collect($result);
+        return $result;
     }
 
     public function usando(array $credenciais)
     {
-        if (!isset($credenciais['usuario']) || empty($credenciais['usuario'])) {
-            throw  new \Exception('Nenhum usuário informado nas credenciais. Use sga()->usando(["usuario" => "...", "senha" => "..."])');
+        if (!isset($credenciais['user']) || empty($credenciais['user'])) {
+            throw  new \Exception('Nenhum usuário informado nas credenciais. Use sci()->usando(["user" => "...", "password" => "..."])');
         }
 
-        if (!isset($credenciais['senha']) || empty($credenciais['senha'])) {
-            throw  new \Exception('Nenhuma senha informada nas credenciais. Use sga()->usando(["usuario" => "...", "senha" => "..."])');
+        if (!isset($credenciais['password']) || empty($credenciais['password'])) {
+            throw  new \Exception('Nenhuma senha informada nas credenciais. Use sci()->usando(["user" => "...", "password" => "..."])');
         }
 
         $this->requests['credenciais'] = [
-            'usuario' => $credenciais['usuario'],
-            'senha' => $credenciais['senha'],
+            'usuario' => $credenciais['user'],
+            'senha' => $credenciais['password'],
         ];
-
-        if (isset($credenciais['matricula'])) {
-            $this->requests['credenciais']['matricula'] = $credenciais['matricula'];
-        }
-
-        return $this;
-    }
-
-    protected function pushPedido($nome)
-    {
-        if (!isset($this->requests['pedidos'])) {
-            $this->requests['pedidos'] = [];
-        }
-
-        $this->requests['pedidos'][] = $nome;
-    }
-
-    public function alunos()
-    {
-        $this->pushPedido('--alunos');
-        return $this;
-    }
-
-    public function conclusoes()
-    {
-        $this->pushPedido('--conclusoes');
-        return $this;
-    }
-
-    public function historico($pdf = false, $conclusao = false)
-    {
-        $this->pushPedido('--historico');
-
-        if($pdf) {
-            $this->pushPedido('--historico-pdf');
-        }
-
-        if($conclusao) {
-            $this->pushPedido('--conclusao-pdf');
-        }        
 
         return $this;
     }
