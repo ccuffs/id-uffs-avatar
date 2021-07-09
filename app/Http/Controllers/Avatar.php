@@ -2,81 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Cli\SciScraper;
 use App\Http\Controllers\Controller;
-use App\Support\Facades\SciScraper;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use CCUFFS\Auth\AuthIdUFFS;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class Avatar extends Controller
 {
-    /*
-    protected function getCredenciais(Entity $entity)
+    protected SciScraper $sci;
+
+    public function __construct(SciScraper $sci)
     {
-        $data = json_decode($entity->data);
-        $scraper = $entity->scrapers->first();
-
-        if(!$scraper) {
-            throw new \Exception('Entidade não possui scraper registrado para uso.');
-        }
-
-        $credenciais = [
-            'usuario' => $scraper->access_user,
-            'senha' => $scraper->access_password,
-            'matricula' => $data->matricula,
-            'scrapper' => $scraper->actor
-        ];
-
-        return $credenciais;
-    }*/
-
-    /**
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *//*
-    public function info(Entity $entity)
-    {
-        $credenciais = $this->getCredenciais($entity);
-        $info = SgaScraper::usando($credenciais)->historico()->get();
-
-        return $this->json($info);
-    }*/
-
-    /**
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *//*
-    public function historicoPdf(Entity $entity)
-    {
-        $credenciais = $this->getCredenciais($entity);
-        $info = SgaScraper::usando($credenciais)->historico(true, true)->get();
-
-        return response()->file($info['pdfPath']);
-    }*/
-
-    /**
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *//*
-    public function create($iduffs)
-    {
-        $credenciais = $this->getCredenciais($entity);
-        $info = SgaScraper::usando($credenciais)->historico()->get();
-
-        return $this->json($info);
-    }*/
+        $this->sci = $sci;
+    }
 
     /**
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index($iduffs)
+    public function create(Request $request)
     {
-        /*
-        $credenciais = $this->getCredenciais($entity);
-        $info = SgaScraper::usando($credenciais)->historico()->get();
-*/
-        return $this->json($iduffs);
+        $credenciais = $request->validate([
+            'user' => 'required',
+            'password' => 'required',
+        ]);
+
+        $auth = new AuthIdUFFS();
+        $info = $auth->login($credenciais);
+
+        if ($info === null) {
+            return abort(401, 'Invalid idUFFS or password');
+        }
+
+        $user = User::firstOrNew([
+            'uid' => $info->uid
+        ]);
+
+        $payload = $this->sci->usando($credenciais)->get();
+
+        $image = Http::withOptions(['verify' => false])
+                    ->withHeaders(['Cookie' => $payload->cookie])
+                    ->get($payload->avatarUrl);
+
+        $imageName = $info->uid . '.jpg';
+        Storage::disk('public')->put($imageName, $image);
+
+        $user->sci_photo_url = Storage::url($imageName);
+        $user->name = $info->name;
+        $user->email = $info->email;
+        $user->password = Crypt::encryptString($info->pessoa_id);
+        $user->save();
+
+        return $this->json([
+            'uid' => $user->uid,
+            'avatar_url' => $user->sci_photo_url
+        ]);
+    }
+
+    /**
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(User $user)
+    {
+        return redirect($user->sci_photo_url);
     }
 }

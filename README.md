@@ -27,6 +27,7 @@ Geralmente o primeiro passo para começar é instalar dependências para rodar o
 
 ```
 apt get install dependencia
+php artisan storage:link
 ```
 
 Recomenda-se que cada comando seja colocado em uma linha diferente:

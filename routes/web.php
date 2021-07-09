@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/iduffs/{iduffs}', [Avatar::class, 'index']);
+Route::get('/iduffs/{user:uid}', [Avatar::class, 'index']);
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'Oi :)';
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

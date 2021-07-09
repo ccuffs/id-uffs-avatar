@@ -15,8 +15,10 @@ use App\Http\Controllers\Avatar;
 |
 */
 
+Route::post('/avatar', [Avatar::class, 'create']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/avatar/{iduffs}', [Avatar::class, 'create']);
+    // TODO: proteger com um token?
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

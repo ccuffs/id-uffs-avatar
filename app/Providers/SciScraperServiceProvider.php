@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Cli\SciScraper;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,8 +15,8 @@ class SciScraperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('sci', function() {
-            return new \App\Cli\SciScraper(config('sciscraper'));
+        $this->app->bind(SciScraper::class, function() {
+            return new SciScraper(config('sciscraper'));
         });
     }
 
