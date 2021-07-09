@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/iduffs/{user:uid}', [Avatar::class, 'index']);
+Route::get('/iduffs/{uid}', [Avatar::class, 'index']);
 
 Route::get('/', function () {
     return 'Oi :)';

@@ -69,8 +69,14 @@ class Avatar extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index($uid)
     {
+        $user = User::where('uid', $uid)->first();
+
+        if (!$user) {
+            return redirect(Storage::url('default.svg'));
+        }
+
         return redirect($user->sci_photo_url);
     }
 }
