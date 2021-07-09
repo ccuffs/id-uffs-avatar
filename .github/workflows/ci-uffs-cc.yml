@@ -6,14 +6,14 @@ on:
       - dev
 env:
   BUILD_HOST: ci.uffs.cc
-  BUILD_WEB_DIRECTORY: /home/ccuffsci/ci.uffs.cc/template
-  BUILD_WEB_URL: https://ci.uffs.cc/template
+  BUILD_WEB_DIRECTORY: /home/ccuffsci/ci.uffs.cc/avatar.uffs.cc
+  BUILD_WEB_URL: https://ci.uffs.cc/avatar.uffs.cc
 jobs:
   build-deploy-audit:
     name: Build, deploy and audit
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"

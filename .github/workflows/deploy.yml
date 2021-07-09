@@ -1,0 +1,24 @@
+name: deploy
+on: push
+env:
+  PROD_HOST: avatar.uffs.cc
+  PROD_WEB_DIRECTORY: /home/ccuffsavatar/avatar.uffs.cc
+  COMPOSER_BIN: php-8.0 ~/.php/composer/composer
+  PHP_BIN: php-8.0
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare deploy server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.PROD_HOST }}
+        username: ${{ secrets.PROD_USERNAME }}
+        password: ${{ secrets.PROD_PASSWORD }}
+        script: |
+          cd ${{ env.PROD_WEB_DIRECTORY }}
+          git pull
+          ${{ env.COMPOSER_BIN }} install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+          ${{ env.PHP_BIN }} artisan migrate
