@@ -26,7 +26,7 @@ class Avatar extends Controller
 
         return $this->json([
             'uid' => $user->uid,
-            'avatar_url' => $user->sci_photo_url
+            'avatar_url' => $user->profile_url
         ]);
     }
 

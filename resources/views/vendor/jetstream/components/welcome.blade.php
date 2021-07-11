@@ -1,4 +1,4 @@
-<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+<div class="pb-10 p-6 sm:px-20 bg-white border-b border-gray-200">
     <div class="mt-8 text-2xl">
         Imagem de perfil
     </div>
@@ -20,7 +20,7 @@
 
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
-                <img src="{{ auth()->user()->sci_photo_url }}" />
+                <img src="{{ auth()->user()->profile_url }}" />
             </div>
 
             <a href="https://sci.uffs.edu.br">
@@ -37,16 +37,16 @@
                 <strong>Exemplos</strong>
             </div>
 
-            <div class="mt-2 text-sm text-gray-500">
-                Confira abaixo alguns exemplos de como você aparecerá nos vários sistemas parceiros:
+            <div class="mt-6 text-sm text-gray-500">
+                Sua imagem de perfil pode ser utilizada em diversos formatos por sites parceiros. Confira abaixo alguns exemplos de como você aparecerá nos vários sistemas parceiros:
             </div>
 
-            <div class="mt-4 text-sm text-gray-500">
+            <div class="mt-6 text-sm text-gray-500">
                 <div class="flex items-center">
-                    <img class="h-12 w-12 rounded-full" src="{{ auth()->user()->sci_photo_url }}"/>
+                    <img class="h-12 w-12 object-cover rounded-full" src="{{ auth()->user()->profile_url }}"/>
                     <div class="ml-2">
                       <div class="text-sm ">
-                        <span class="font-semibold">{{ auth()->user()->name }}</span>
+                        <span class="font-semibold">{{ auth()->user()->full_name }}</span>
                         <span class="text-gray-500"></span>
                       </div>
                       <div class="text-gray-500 text-xs ">{{ auth()->user()->uid }}</div>
@@ -54,14 +54,23 @@
                 </div>
             </div>
 
-            <div class="mt-4 text-sm text-gray-500">
-                <img class="inline object-cover w-16 h-16 mr-2" src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Profile image"/>
+            <div class="mt-6 text-sm text-gray-500">
+                <img class="inline object-cover w-24 h-24 mr-4" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
+                <img class="inline object-cover w-16 h-16 mr-4" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
+                <img class="inline object-cover w-12 h-12 mr-4" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
+                <img class="inline object-cover w-8 h-8 mr-4" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
             </div>
 
-            <div class="mt-4 text-sm text-gray-500">
+            <div class="mt-6 -space-x-4">
+                <img class="relative z-30 inline object-cover w-12 h-12 border-2 border-white rounded-full" src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Profile image"/>
+                <img class="relative z-20 inline object-cover w-12 h-12 border-2 border-white rounded-full" src="https://images.pexels.com/photos/2955305/pexels-photo-2955305.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Profile image"/>
+                <img class="relative z-10 inline object-cover w-12 h-12 border-2 border-white rounded-full" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
+            </div>
+
+            <div class="mt-6 text-sm text-gray-500">
                 <div class="relative inline-block">
-                    <img class="inline-block object-cover w-12 h-12 rounded-full" src="https://images.pexels.com/photos/2955305/pexels-photo-2955305.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Profile image"/>
-                    <span class="absolute bottom-0 right-0 inline-block w-3 h-3 bg-green-600 border-2 border-white rounded-full"></span>
+                    <img class="inline-block object-cover w-16 h-16 rounded-full" src="{{ auth()->user()->profile_url }}" alt="Profile image"/>
+                    <span class="absolute bottom-0 right-0 inline-block w-4 h-4 bg-green-600 border-2 border-white rounded-full"></span>
                 </div>
             </div>
         </div>
