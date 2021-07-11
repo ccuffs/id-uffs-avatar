@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" x-data="{ loading: false }" x-on:submit="loading = true; $refs.btn.disabled = true;">
             @csrf
 
             <div>
@@ -39,9 +39,19 @@
                     </a>
                 @endif
 
-                <x-jet-button class="ml-4">
-                    {{ __('Entrar') }}
-                </x-jet-button>
+                <button type="submit" x-ref="btn" class="ml-4 inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                    <span>{{ __('Entrar') }}</span>
+                    <span x-show="loading">
+                        <svg class="animate-spin text-white-200 h-5 w-5 ml-2" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                            <g fill="none" fill-rule="evenodd">
+                                <g transform="translate(1 1)" stroke-width="2">
+                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                                    <path d="M36 18c0-9.94-8.06-18-18-18"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
             </div>
         </form>
     </x-jet-authentication-card>

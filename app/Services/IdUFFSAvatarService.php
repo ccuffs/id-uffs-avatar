@@ -8,6 +8,7 @@ use CCUFFS\Auth\AuthIdUFFS;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class IdUFFSAvatarService
 {
@@ -31,7 +32,7 @@ class IdUFFSAvatarService
         $info = $auth->login($credenciais);
 
         if ($info === null) {
-            throw new \Exception('Invalid idUFFS or password');
+            throw ValidationException::withMessages(['idUFFS ou senha inválidos']);
         }
 
         $user = User::firstOrNew([
