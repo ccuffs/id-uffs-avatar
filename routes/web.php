@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/iduffs/{uid}', [Avatar::class, 'index']);
 
 Route::get('/', function () {
-    return 'Oi :)';
+    return view('auth.login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

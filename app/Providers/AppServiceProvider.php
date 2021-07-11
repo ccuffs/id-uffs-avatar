@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Cli\SciScraper;
+use App\Services\IdUFFSAvatarService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(IdUFFSAvatarService::class, function() {
+            return new IdUFFSAvatarService(app(SciScraper::class));
+        });
     }
 
     /**
