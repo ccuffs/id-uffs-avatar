@@ -20,5 +20,5 @@ return [
     | 
     |
     */
-    'config_path' => env('UFFS_SCIA_SCRAPER_CONFIG_PATH', base_path('cli/uffs-sci-scraping/config.json')),
+    'config_path' => env('UFFS_SCI_SCRAPER_CONFIG_PATH', base_path('cli/uffs-sci-scraping/config.json')),
 ];

@@ -2,7 +2,6 @@
 
 namespace App\Cli;
 
-use Exception;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -18,6 +17,12 @@ class SciScraper
         $this->config = $config;
     }
 
+    protected function secureLog($cmd)
+    {
+        $out = preg_replace('/senha=(.*) /i', 'senha=*** ', $cmd);
+        Log::info($out);
+    }
+
     protected function runCli($args = '')
     {
         $output = [];
@@ -25,6 +30,8 @@ class SciScraper
         $sci = $this->config['bin'];
         $configPath = $this->config['config_path'];
         $cmd = "$sci $args --config=\"$configPath\"";
+        
+        $this->secureLog($cmd);
 
         exec($cmd, $output, $code);
 
