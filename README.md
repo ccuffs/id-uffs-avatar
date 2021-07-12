@@ -8,7 +8,7 @@
 
 Micro-serviço web para mostrar imagens de perfil a partir do idUFFS de um usuário da [Universidade Federal da Fronteira Sul](https://www.uffs.edu.br). A ideia é ter o mínimo de atrito (e esforço) para mostrar uma imagem de avatar de um usuário que possua um idUFFS, ao estilo do serviço [Gravatar](https://gravatar.com).
 
-## ✨ Utiliação do serviço
+## ✨ Uso do serviço
 
 Se você está construindo um serviço web para a UFFS e gostaria de mostrar o avatar de um usuário que tenha um idUFFS, basta criar uma imagem da seguinte forma:
 
@@ -27,7 +27,7 @@ onde `{iduffs}` deve ser substituído pelo idUFFS do usuário em questão. Por e
 
 Usuários do seu serviço podem acessar [cc.uffs.edu.br/avatar](https://cc.uffs.edu.br/avatar) para conferir sua imagem de perfil ativa.
 
-## 🚀 Começando (desenvolvimento)
+## 🚀 Desenvolvimento 
 
 Se você planeja trabalhar para evoluir essa ferramenta, siga as intruções abaixo. Você precisará do seguinte já instalado:
 
