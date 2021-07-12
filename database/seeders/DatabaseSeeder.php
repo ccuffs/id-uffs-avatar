@@ -16,21 +16,5 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = new User([
-            'name' => 'Administrador',
-            'email' => 'computacao.ch@uffs.edu.br',
-            'password' => Hash::make('password')
-        ]);
-        
-        $user->save();
-
-        $team = new Team([
-            'name' => 'apps',
-            'personal_team' => true,
-            'user_id' => $user->id
-        ]);
-
-        $team->save();
-        $team->users()->attach($user->id, ['role' => 'admin']);
     }
 }
