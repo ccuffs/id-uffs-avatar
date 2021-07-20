@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Cli\SciScraper;
 use App\Models\User;
 use CCUFFS\Auth\AuthIdUFFS;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +41,10 @@ class IdUFFSAvatarService
         ]);
 
         $payload = $this->sci->usando($credenciais)->get();
+
+        if (!$payload) {
+            throw ValidationException::withMessages(['Problema na obtenção de dados']);
+        }
 
         $image = Http::withOptions(['verify' => false])
                     ->withHeaders(['Cookie' => $payload->cookie])
