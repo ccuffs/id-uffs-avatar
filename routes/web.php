@@ -15,7 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Fix wrong style/mix urls when being served from reverse proxy
-URL::forceRootUrl(config('app.url'));
+$proxy_url    = getenv('PROXY_URL');
+$proxy_schema = getenv('PROXY_SCHEME');
+
+if (!empty($proxy_url)) {
+   URL::forceRootUrl($proxy_url);
+}
+
+if (!empty($proxy_schema)) {
+   URL::forceScheme($proxy_schema);
+}
 
 Route::get('/iduffs/{uid}', [Avatar::class, 'index']);
 
