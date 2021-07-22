@@ -26,7 +26,7 @@ if (!empty($proxy_schema)) {
    URL::forceScheme($proxy_schema);
 }
 
-Route::get('/iduffs/{uid}', [Avatar::class, 'index']);
+Route::get('/iduffs/{uid}', [Avatar::class, 'index'])->name('use.iduffs');
 
 Route::get('/', function () {
     return view('auth.login');
