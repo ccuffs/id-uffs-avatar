@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Fix wrong style/mix urls when being served from reverse proxy
-$proxy_url    = getenv('PROXY_URL');
-$proxy_schema = getenv('PROXY_SCHEME');
+$proxy_url    = env('PROXY_URL');
+$proxy_schema = env('PROXY_SCHEME');
 
 if (!empty($proxy_url)) {
    URL::forceRootUrl($proxy_url);
