@@ -20,7 +20,7 @@
 
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
-                <img src="{{ auth()->user()->profile_url }}" />
+                <img src="{{ asset(auth()->user()->profile_url) }}" />
             </div>
 
             <a href="https://sci.uffs.edu.br">
@@ -43,7 +43,7 @@
 
             <div class="mt-6 text-sm text-gray-500">
                 <div class="flex items-center">
-                    <img class="h-12 w-12 object-cover rounded-full" src="{{ auth()->user()->profile_url }}"/>
+                    <img class="h-12 w-12 object-cover rounded-full" src="{{ asset(auth()->user()->profile_url) }}"/>
                     <div class="ml-2">
                       <div class="text-sm ">
                         <span class="font-semibold">{{ auth()->user()->full_name }}</span>
