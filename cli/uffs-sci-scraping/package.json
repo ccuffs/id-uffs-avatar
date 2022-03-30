@@ -12,7 +12,7 @@
   "dependencies": {
     "delay": "^5.0.0",
     "fs-extra": "^9.1.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "puppeteer": "^2.1.1"
   }
 }
